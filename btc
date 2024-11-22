@@ -1,0 +1,11 @@
+#!/bin/bash
+
+current_price=$(curl -s https://api.coindesk.com/v1/bpi/currentprice.json | jq -r '.bpi.USD.rate_float')
+previous_price=$(curl -s https://api.coindesk.com/v1/bpi/historical/close.json?for=yesterday | jq -r '.bpi | to_entries | .[0].value')
+
+percentage_change=$(echo "scale=2; (($current_price - $previous_price) / $previous_price) * 100" | bc)
+formatted_price=$(printf "%'.0f" "$current_price")
+formatted_percentage=$(printf "%.2f" "$percentage_change")
+
+# echo "${formatted_price}\$ | ${formatted_percentage}% " | lolcat - LINE WITH %
+echo "${formatted_price}\$ " | lolcat

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Exécuter la commande mullvad status et lire la première ligne
+status=$(mullvad status | head -n 1)
+
+# Vérifier le statut et imprimer l'icône correspondante
+if [[ $status == "Disconnected" ]]; then
+    echo -e "\uF127"  # Icon for disconnected (e.g., fa-chain-broken)
+elif [[ $status == "Connecting" ]]; then
+    echo -e "\uF110"  # Icon for connecting (e.g., fa-spinner)
+elif [[ $status == "Connected" ]]; then
+    echo -e "\uF023"  # Icon for connected (e.g., fa-lock)
+else
+    echo "Unknown status"
+fi

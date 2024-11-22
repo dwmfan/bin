@@ -1,0 +1,9 @@
+#!/bin/sh
+
+wallpath=$HOME/Pix/Wallpaper
+wallpaper=$(ls $wallpath | dmenu -i -l 50)
+[ -z "$wallpaper" ] || feh --bg-fill "$wallpath"/"$wallpaper"
+wal -c
+wal -i "$wallpath"/"$wallpaper"
+
+xdotool key super+F5
