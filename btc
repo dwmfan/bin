@@ -1,7 +1,11 @@
 #!/bin/bash
 
-current_price=$(curl -s https://api.coindesk.com/v1/bpi/currentprice.json | jq -r '.bpi.USD.rate_float')
-previous_price=$(curl -s https://api.coindesk.com/v1/bpi/historical/close.json?for=yesterday | jq -r '.bpi | to_entries | .[0].value')
+# Récupère le prix actuel via l'API de Binance (symbole BTCUSDT)
+current_price=$(curl -s "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT" | jq -r '.price | tonumber')
+
+# Récupère le prix de clôture d'hier via l'API Kline de Binance
+# Intervalle 1 jour (1d), limite 1 pour avoir le dernier jour complet
+previous_price=$(curl -s "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1" | jq -r '.[0][4] | tonumber')
 
 percentage_change=$(echo "scale=2; (($current_price - $previous_price) / $previous_price) * 100" | bc)
 formatted_price=$(printf "%'.0f" "$current_price")
