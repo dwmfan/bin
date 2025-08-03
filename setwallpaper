@@ -4,7 +4,7 @@ if [ -x ~/.fehbg ]; then
     ~/.fehbg
     wallpaper=$(grep -oP "'\K[^']+" ~/.fehbg | sed 's/[[:space:]]*$//')
 else
-    wallpath=$HOME/Pix/Wallpaper
+    wallpath=$HOME/Wallpaper
     wallpaper=$(find "$wallpath" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) | shuf -n 1)
     feh --bg-fill "$wallpaper"
 fi
